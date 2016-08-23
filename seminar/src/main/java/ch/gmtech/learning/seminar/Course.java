@@ -1,8 +1,12 @@
 package ch.gmtech.learning.seminar;
 
+import static java.util.Arrays.*;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.gmtech.learning.seminar.view.CsvRender;
 import ch.gmtech.learning.seminar.view.Html;
 
 public class Course {
@@ -22,38 +26,11 @@ public class Course {
 		_students = students;
 	}
 	
-	public String getName() {
-		return _name;
-	}
-
-	public String getNumber() {
-		return _number;
-	}
-
-	public String getDescription() {
-		return _name + " " + _number;
-	}
-	
-	public String getLocation() {
-		return _location;
-	}
-	
-	public List<String> getStudentList() {
-		List<String> studentsDescription = new ArrayList<String>();
-		for (Student student : _students) {
-			studentsDescription.add(student.getInfo());
-		}
-		return studentsDescription;
-	}
-
-	public int getSeatsLeft() {
-		return _numberOfSeats - _students.size();
-	}
-	
-	public String render() {
+	public String renderHtml() {
+		
 		List<Html> studentList = new ArrayList<Html>();
-		for (String student : getStudentList()) {
-			studentList.add(new Html().li(student));
+		for (Student student : _students) {
+			studentList.add(new Html().li(student.firstName() + " " + student.lastName()));
 		}
 		
 		return new Html().html(
@@ -68,6 +45,27 @@ public class Course {
 						new Html().div("Partecipanti:"),
 						new Html().ul(studentList.toArray(new Html[]{}))))
 		.render();
+	}
+	
+	public void renderCsv(File file) {
+		
+		List<List<String>> data = new ArrayList<List<String>>();
+		
+		data.add(asList(_number, _name, getDescription(), _location, String.valueOf(getSeatsLeft())));
+		
+		for (Student student : _students) {
+			data.add(asList(student.firstName(), student.lastName()));
+		}
+		
+		new CsvRender(file).render(data);
+	}
+	
+	private String getDescription() {
+		return _name + " " + _number;
+	}
+	
+	private int getSeatsLeft() {
+		return _numberOfSeats - _students.size();
 	}
 	
 }

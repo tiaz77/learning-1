@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.hamcrest.core.Is;
 import org.junit.Test;
 
-public class HtmlBuilderTest {
+public class HtmlTest {
 
 	@Test
 	public void buildsNestedTags() {

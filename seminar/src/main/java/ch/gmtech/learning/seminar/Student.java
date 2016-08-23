@@ -9,12 +9,12 @@ public class Student {
 		_lastName = lastName;
 	}
 	
-	public String getInfo() {
-		return getFullName();
+	public String firstName() {
+		return _firstName;
 	}
-
-	public String getFullName() {
-		return _firstName + " " + _lastName;
+	
+	public String lastName() {
+		return _lastName;
 	}
 
 }
