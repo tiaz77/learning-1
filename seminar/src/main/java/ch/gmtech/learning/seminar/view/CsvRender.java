@@ -1,43 +1,37 @@
 package ch.gmtech.learning.seminar.view;
 
-import static java.util.Arrays.*;
-import static org.apache.commons.collections4.CollectionUtils.*;
-import static org.apache.commons.io.FileUtils.*;
-import static org.apache.commons.lang3.StringUtils.*;
+import static org.apache.commons.collections4.CollectionUtils.collect;
+import static org.apache.commons.lang3.StringUtils.join;
+import static org.apache.commons.lang3.StringUtils.removeEnd;
 
-import java.io.File;
-import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.collections4.Transformer;
+import org.apache.commons.io.IOUtils;
 
 public class CsvRender {
 
-	private File _file;
+	public String render(List<List<String>> data) {
 
-	public CsvRender(File file) {
-		_file = file;
-	}
+		String result = "";
 
-	public void render(List<List<String>> data) {
-		
-		try {
-			for (List<String> line : data) {
+		for (List<String> line : data) {
+
+			Collection<String> values = collect(line, new Transformer<String, String>() {
 				
-				Collection<String> values = collect(line, new Transformer<String, String>() {
-					public String transform(String input) {
-						return "\""+input+"\"";
-					}
-				});
-				
-				writeLines(_file, StandardCharsets.UTF_8.name(), asList(join(values, ";")), true);
-				
-			}
-		} catch (Exception e) {
-			throw new RuntimeException(e);
+						public String transform(String input) {
+							return "\"" + input + "\"";
+						}
+						
+					});
+
+			result += join(values, ";") + IOUtils.LINE_SEPARATOR;
+
 		}
-		
+
+		return removeEnd(result, IOUtils.LINE_SEPARATOR);
+
 	}
 
 }

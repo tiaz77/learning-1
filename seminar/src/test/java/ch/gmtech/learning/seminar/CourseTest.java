@@ -1,12 +1,10 @@
 package ch.gmtech.learning.seminar;
 
-import static java.util.Arrays.*;
-import static org.apache.commons.io.FileUtils.*;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static java.util.Arrays.asList;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
-import java.io.File;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.junit.Test;
@@ -41,10 +39,7 @@ public class CourseTest {
 		List<Student> students = asList(new Student("Tizio", "Cognome"), new Student("Tizio2", "Cognome2"));
 		Course lambdaCalculus = new Course("Lambda calculus", "1", "Lugano", 10, students);
 
-		File file = new File(getTempDirectory(), "Lambda calculus.csv");
-		lambdaCalculus.renderCsv(file);
-		
-		String fileContent = readFileToString(file, StandardCharsets.UTF_8.name());
+		String fileContent = lambdaCalculus.renderCsv();
 		
 		assertThat(fileContent, containsString("Lambda calculus"));
 		assertThat(fileContent, containsString("Tizio"));

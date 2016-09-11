@@ -1,10 +1,11 @@
 package ch.gmtech.learning.seminar;
 
-import static java.util.Arrays.*;
+import static java.util.Arrays.asList;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.io.IOUtils;
 
 import ch.gmtech.learning.seminar.view.CsvRender;
 import ch.gmtech.learning.seminar.view.Html;
@@ -24,6 +25,15 @@ public class Course {
 		_location = location;
 		_numberOfSeats = numberOfSeats;
 		_students = students;
+	}
+	
+	public void enroll(Student student) {
+		
+		if (_students.size() < getSeatsLeft()) {
+			_students.add(student); 
+		} else {
+			throw new RuntimeException("Enrollment failed because of seats terminated!");
+		}
 	}
 	
 	public String renderHtml() {
@@ -47,7 +57,7 @@ public class Course {
 		.render();
 	}
 	
-	public void renderCsv(File file) {
+	public String renderCsv() {
 		
 		List<List<String>> data = new ArrayList<List<String>>();
 		
@@ -57,7 +67,24 @@ public class Course {
 			data.add(asList(student.firstName(), student.lastName()));
 		}
 		
-		new CsvRender(file).render(data);
+		return new CsvRender().render(data);
+	}
+	
+	public String render() {
+		
+		String newLine = IOUtils.LINE_SEPARATOR;
+		String studentList = "";
+
+		for (Student student : _students) {
+			studentList += student.firstName() + " " + student.lastName() + newLine;
+		}
+		
+		return _name + " " + _number + ": " + getDescription() + newLine 
+				+ "location: " + _location + newLine 
+				+ "seats left: " + getSeatsLeft() + newLine 
+			    +  newLine  
+			    + "Enrollment:" + newLine  
+			    + studentList;
 	}
 	
 	private String getDescription() {
