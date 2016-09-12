@@ -1,11 +1,9 @@
 package ch.gmtech.learning.seminar;
 
-import static java.util.Arrays.asList;
+import static java.util.Arrays.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.io.IOUtils;
 
 import ch.gmtech.learning.seminar.view.CsvRender;
 import ch.gmtech.learning.seminar.view.Html;
@@ -67,24 +65,26 @@ public class Course {
 			data.add(asList(student.firstName(), student.lastName()));
 		}
 		
-		return new CsvRender().render(data);
+		return new CsvRender(data).render();
 	}
 	
 	public String render() {
 		
-		String newLine = IOUtils.LINE_SEPARATOR;
-		String studentList = "";
+		List<List<String>> data = new ArrayList<List<String>>();
+		
+		data.add(asList(_name, _number, getDescription()));
+		data.add(asList("location:", _location)); 
+		data.add(asList("seats left:", String.valueOf(getSeatsLeft())));
+		
+		data.add(new ArrayList<String>());
 
+		data.add(asList("Enrollment:")); 
 		for (Student student : _students) {
-			studentList += student.firstName() + " " + student.lastName() + newLine;
+			data.add(asList(student.firstName(), student.lastName()));
 		}
 		
-		return _name + " " + _number + ": " + getDescription() + newLine 
-				+ "location: " + _location + newLine 
-				+ "seats left: " + getSeatsLeft() + newLine 
-			    +  newLine  
-			    + "Enrollment:" + newLine  
-			    + studentList;
+		return new CsvRender(data, " ", "").render();
+		
 	}
 	
 	private String getDescription() {

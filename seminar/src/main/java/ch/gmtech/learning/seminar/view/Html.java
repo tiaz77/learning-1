@@ -5,14 +5,14 @@ import static java.util.Arrays.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Html {
+public class Html extends AbstractView {
 
 	private String _name;
 	private String _value = "";
 	
 	private List<Html> _children = new ArrayList<Html>();
 	
-	public String render() {
+	String renderImpl() {
 		String result = "";
 		result += "<" + _name + ">";
 		

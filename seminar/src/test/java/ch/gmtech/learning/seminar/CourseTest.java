@@ -1,9 +1,8 @@
 package ch.gmtech.learning.seminar;
 
-import static java.util.Arrays.asList;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static java.util.Arrays.*;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
@@ -35,14 +34,31 @@ public class CourseTest {
 	}
 	
 	@Test
-	public void rendersInCsv() throws Exception {
+	public void rendersInCsv() {
 		List<Student> students = asList(new Student("Tizio", "Cognome"), new Student("Tizio2", "Cognome2"));
 		Course lambdaCalculus = new Course("Lambda calculus", "1", "Lugano", 10, students);
 
-		String fileContent = lambdaCalculus.renderCsv();
+		String content = lambdaCalculus.renderCsv();
 		
-		assertThat(fileContent, containsString("Lambda calculus"));
-		assertThat(fileContent, containsString("Tizio"));
-		assertThat(fileContent, containsString("Tizio2"));
+		assertThat(content, containsString("\"Lambda calculus\";"));
+		assertThat(content, containsString("\"Tizio\";"));
+		assertThat(content, containsString("\"Tizio2\";\"Cognome2\""));
+	}
+	
+	@Test
+	public void rawRender() {
+		List<Student> students = asList(new Student("Tizio", "Cognome"), new Student("Tizio2", "Cognome2"));
+		Course lambdaCalculus = new Course("Lambda calculus", "1", "Lugano", 10, students);
+		
+		String content = lambdaCalculus.render();
+		
+		assertThat(content, is("Lambda calculus 1 Lambda calculus 1\n"
+				+ "location: Lugano\n"
+				+ "seats left: 8"
+				+ "\n"
+				+ "\n"
+				+ "Enrollment:\n"
+				+ "Tizio Cognome\n"
+				+ "Tizio2 Cognome2"));
 	}
 }
