@@ -24,5 +24,15 @@ public class MonitorableQueue implements Queue {
 	public int maximumSize() {
 		return _marker;
 	}
+
+	@Override
+	public Object peek() {
+		return _queue.peek();
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return _queue.isEmpty();
+	}
 	
 }

@@ -5,5 +5,9 @@ public interface Queue {
 	void enqueue(Object o);
 
 	Object dequeue();
-
+	
+	Object peek();
+	
+	boolean isEmpty();
+	
 }

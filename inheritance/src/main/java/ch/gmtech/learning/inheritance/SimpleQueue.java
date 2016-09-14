@@ -18,5 +18,15 @@ public class SimpleQueue implements Queue {
 	public Object dequeue() {
 		return _elements.remove(0);
 	}
+
+	@Override
+	public Object peek() {
+		return _elements.get(0);
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return _elements.isEmpty();
+	}
 	
 }
