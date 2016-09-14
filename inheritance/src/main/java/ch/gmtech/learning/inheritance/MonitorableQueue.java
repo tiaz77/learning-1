@@ -4,25 +4,33 @@ package ch.gmtech.learning.inheritance;
 public class MonitorableQueue implements Queue {
 
 	private final Queue _queue;
-	private int _marker;
+	
+	private int _maxSize;
+	private int _currentSize;
 	
 	public MonitorableQueue() {
 		_queue = new SimpleQueue();
-		_marker = 0;
+		_maxSize = 0;
+		_currentSize = 0;
 	}
 	
+	@Override
 	public void enqueue(Object o) {
 		_queue.enqueue(o);
-		_marker++;
+		_currentSize++;
+		if (_currentSize > _maxSize) {
+			_maxSize = _currentSize;
+		}
 	}
 	
+	@Override
 	public Object dequeue() {
-		_marker--;
+		_currentSize--;
 		return _queue.dequeue();
 	}
-	
+
 	public int maximumSize() {
-		return _marker;
+		return _maxSize;
 	}
 
 	@Override
