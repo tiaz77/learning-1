@@ -1,12 +1,8 @@
-package inheritance;
+package ch.gmtech.learning.inheritance;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
-
-import ch.gmtech.learning.inheritance.SimpleQueue;
 
 public class SimpleQueueTest {
 
