@@ -55,7 +55,7 @@ public class CourseTest {
 		
 		String content = lambdaCalculus.render();
 		
-		assertThat(content, is("Lambda calculus 1 Lambda calculus 1" + newLine
+		assertThat(content, is("Nome corso: Lambda calculus 1" + newLine
 				+ "location: Lugano" + newLine
 				+ "seats left: 8"
 				+ newLine

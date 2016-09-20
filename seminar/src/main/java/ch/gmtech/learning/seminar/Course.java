@@ -59,7 +59,7 @@ public class Course {
 		
 		List<List<String>> data = new ArrayList<List<String>>();
 		
-		data.add(asList(_number, _name, getDescription(), _location, String.valueOf(getSeatsLeft())));
+		data.add(asList(_name, _number, getDescription(), _location, String.valueOf(getSeatsLeft())));
 		
 		for (Student student : _students) {
 			data.add(asList(student.firstName(), student.lastName()));
@@ -72,7 +72,7 @@ public class Course {
 		
 		List<List<String>> data = new ArrayList<List<String>>();
 		
-		data.add(asList(_name, _number, getDescription()));
+		data.add(asList("Nome", "corso:", getDescription()));
 		data.add(asList("location:", _location)); 
 		data.add(asList("seats left:", String.valueOf(getSeatsLeft())));
 		
